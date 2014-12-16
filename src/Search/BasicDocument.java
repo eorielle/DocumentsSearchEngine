@@ -20,9 +20,13 @@ public class BasicDocument {
 			int last_word = -1;
 			
 			for(int i=0; i<s.length(); i++){
-				if(!Character.isLetterOrDigit(s.charAt(i)) || (i == s.length() - 1 && last_word != i-1)){
+				if(!Character.isLetterOrDigit(s.charAt(i)) || (i == s.length()-1 && last_word != i-1)){
 					if(last_word != i-1 && !breakWords.contains(s.substring(last_word+1, i))){
-						w.add(s.substring(last_word+1, i));
+						if( i==s.length()-1 ){
+							w.add(s.substring(last_word+1, i+1));
+						} else {
+							w.add(s.substring(last_word+1, i));
+						}
 					}
 					last_word = i;
 				}

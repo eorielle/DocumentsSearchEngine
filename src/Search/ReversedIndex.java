@@ -57,15 +57,21 @@ public class ReversedIndex {
 		return index.get(word);
 		}
 	
-	public Map<Integer,Integer> cosSearch(Request req){
+/*	public Map<Integer,ArrayList<Integer>> cosSearch(Request req){
 		Set<String> temp_set = req.getWords().keySet();
+		int i = 0;
 		for(String wordReq : temp_set){
 			Set<Integer> key_set = search(wordReq).keySet();
 			for(int docID : key_set){
-				if(){//in result already
-			} else {//add entry
 				
+				if(){//in result already
+						
+					
+				} else {//add entry
+					
+				}
 			}
+				i++;
 		}
 		
 		return null;
@@ -73,7 +79,7 @@ public class ReversedIndex {
 		
 		public float computeCosinus(Request req, BasicDocument doc){
 			return 
-		}
+		}*/
 	
 	public Map<String, Map<Integer, Integer>> getIndex() {
 		return index;

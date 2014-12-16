@@ -60,7 +60,8 @@ public class Indexer {
 			e.printStackTrace();
 		}
 		
-	 index.search("program");
+	 //index.search("program");
+	 documents.cosSearch(new Request(0, "shallow lisp", words));
 	 //documents.search(2000);
 		
 	}
