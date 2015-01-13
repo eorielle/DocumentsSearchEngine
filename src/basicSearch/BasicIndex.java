@@ -1,10 +1,10 @@
 package basicSearch;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 import reversedSearch.ReversedIndex;
 
@@ -28,14 +28,24 @@ public class BasicIndex {
 		}
 	}
 	
+	//add a document in the index
 	public void add(BasicDocument document){
 		HashMap<String, Double[]> result = new HashMap<String, Double[]>();
 		for(String word : document.getWords().keySet()){
 			result.put(word, new Double[]{(double) document.getWords().get(word),0d,0d});
+			//System.out.println(word + document.getWords().get(word));
 		}
-		index.put(document.getId(), computePond(result));
+		index.put(document.getId(), result);
+	}
+	
+	public void computePonds(){
+		docNum = index.size();
+		for (int id : index.keySet()){
+			index.replace(id, computePond(index.get(id))) ;
+		}
 	}
 
+	
 	public Map<String, Double[]> search(int i){
 		//System.out.println(index.get(i));
 		return index.get(i);
@@ -45,20 +55,19 @@ public class BasicIndex {
 		HashMap<Integer, Double> result = new HashMap<Integer, Double>();
 		Set<String> temp_set = req.getWords().keySet();
 		
+		//pour chaque document de l'index
 		for(int i : index.keySet()){
-			int size = index.get(i).size();
 			HashMap<String, Double[]> temp_r= new HashMap<String, Double[]>();
 			
-			int temp = 0;
+			//pour chaque mot du document
 			for(String word : index.get(i).keySet()){
-				
+				//si le mot est dans la requête, 
 				if(req.getWords().containsKey(word)){
 					temp_r.put(word, new Double[]{index.get(i).get(word)[mode],(double) req.getWords().get(word)});
 					
 				} else {
 					temp_r.put(word, new Double[]{index.get(i).get(word)[mode],0d});
 				}
-				temp ++;
 			}
 			
 			double f = computeCos(temp_r);
@@ -120,10 +129,10 @@ public class BasicIndex {
 			//store normalized ponderations and Tf-IDF coefficients in the index
 			double nCoeff = computeNormalCoef(word, map);
 			double TICoeff = computeTICoef(word, map);
-			if(nCoeff < maxFreq){
+			if(nCoeff > maxFreq){
 				maxFreq = nCoeff;
 			}
-			if(TICoeff < maxTI){
+			if(TICoeff > maxTI){
 				maxTI = TICoeff;
 			}
 			result.put(word, new Double[]{map.get(word)[0], nCoeff, TICoeff});
@@ -155,6 +164,14 @@ public class BasicIndex {
 	public void TISearch(Request request) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public ReversedIndex getrIndex() {
+		return rIndex;
+	}
+
+	public void setrIndex(ReversedIndex rIndex) {
+		this.rIndex = rIndex;
 	}
 
 }

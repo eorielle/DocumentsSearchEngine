@@ -1,6 +1,7 @@
 package Main;
 
 import java.io.Console;
+import java.util.Scanner;
 
 
 
@@ -15,19 +16,37 @@ public class Main {
 	    indexer.createIndex();
 	    String cmd = "";
 	    Console console = System.console();
+	    Scanner scanner = new Scanner(System.in);
 	    
-	    do{
+	    System.out.println(
+	    		"********************\n"
+	    		+ "Welcome to the intergalactical search engine ! \n"
+	    		+ "Please choose the search mode :\n"
+	    		+ "********************\n"
+	    		+ "1 - Basic mode\n"
+	    		+ "2 - Using inversed index\n"
+	    		+ "3 - Using normalized ponderations\n"
+	    		+ "4 - Using TF-IDF poderations\n\n" 
+	    		+ "Enter selection:"
+	    		);
+	    
+	    	cmd = scanner.nextLine();
+	    	
+	    	
+	    while(!searchMode(cmd)){
 	    	System.out.println(
-		    		"Welcome to the intergalactical search engine, please choose the search mode :\n"
-		    		+ "1 - Basic mode"
-		    		+ "2 - Using inversed index"
-		    		+ "3 - Using normalized ponderations"
-		    		+ "4 - Using TF-IDF poderations"
+		    		"Your selection is not valid ! \n"
+		    		+ "1 - Basic mode\n"
+		    		+ "2 - Using inversed index\n"
+		    		+ "3 - Using normalized ponderations\n"
+		    		+ "4 - Using TF-IDF poderations\n\n" 
+		    		+ "Enter selection:"
 		    		);
-	    	cmd = console.readLine("Enter selection:");
-	    } while(!searchMode(cmd));
+	    	cmd = scanner.nextLine();
+	    }
 	    
-	    cmd = console.readLine("Enter request:");
+	    System.out.println("Enter request:");
+	    cmd = scanner.nextLine();
 	    search(cmd);
 	    
 	    cmd = console.readLine("***********************");
